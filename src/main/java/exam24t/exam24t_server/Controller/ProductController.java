@@ -68,16 +68,21 @@ public class ProductController {
             }
     }
 
-   /* @GetMapping("/findProductByName")
-    public ResponseEntity<Product> findProductByName(@RequestParam ){
-        //Optional<Product> productOptional = productService.
-        Product product = new Product();
-        /*if(productOptional.isPresent()){
-            return new ResponseEntity<>(productOptional.get(),HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(product, HttpStatus.OK);
+    @GetMapping("/findProductByName")
+    public ResponseEntity<Set<Product>> findProductByName(@RequestParam String name){
+       Set<Product> set = productService.findAll();
+        //Sætter alle rows ind i et set, sammenligener med input og fjerner alle der ikke er lig med input
+        for (Product p: set)
+              {if(!p.getName().equals(name)){
+                  set.remove(p);
+              }
+          }
+        if(set.isEmpty()){
+            return new ResponseEntity<>(set, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(set, HttpStatus.OK);
         }
-    }*/
+    }
 
 
 
